@@ -69,7 +69,11 @@ void imprimeCaminhoBP(Grafo *grafo, int inicioComponente, int antecessor[]);
 
 void componenteConexa(Grafo * grafo);
 
-void verificaVerticeComponenteConexo(Grafo * grafo, int componenteConexo[], int vertice, int idComponente);
+void inicializaComponenteConexa(Grafo * grafo, int componente[]);
+
+void verificaVerticeComponenteConexa(Grafo * grafo, int vertice, int idComponente, int componente[]);
+
+void imprimeComponenteConexa(Grafo * grafo, int idComponente, int componente[]);
 
 void verticeArticulacao(Grafo* grafo);
 
@@ -77,6 +81,3 @@ void percorreBP(Grafo* grafo, int vertice, int cor[], int antecessor[], int* tem
 
 void imprimeVerticeArticulacao(Grafo* grafo, int vArticulacao[]);
 
-void inicializaComponenteConexa(Grafo * grafo, int componente[]);
-
-void imprimeComponenteConexa(Grafo * grafo, int componente[], int idComponente);
