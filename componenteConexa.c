@@ -3,38 +3,45 @@
 #include "grafo.h"
 
 void inicializaComponenteConexa(Grafo * grafo, int componente[]) {
-   for (int vertice = 0; vertice < grafo->numVertices; ++vertice) {
+  for (int vertice = 0; vertice < grafo->numVertices; ++vertice) {
     componente[vertice] = -1;
-  }
+   }
 }
 
 void componenteConexa(Grafo * grafo) {
-  int componente[grafo->numVertices];
   int idComponente = 0;
-  
- inicializaComponenteConexa(Grafo * grafo, componente[grafo->numVertices]);
-  
-  fprintf(stdout, "\nComponentes Conexos:");
+  int componente[grafo->numVertices];
+
+  inicializaComponenteConexa(grafo, componente);
+
+  fprintf(stdout, "\nComponentes Conectados:");
   for (int vertice = 0; vertice < grafo->numVertices; ++vertice) {
-    if (componente[vertice] == ANT_INICIO) {
+    if (componente[vertice] == -1) {
       idComponente++;
-      fprintf(stdout, "\nC%d: ", idComponente);
-      verificaVerticeComponenteConexo(grafo, vertice, componente, idComponente);
+      verificaVerticeComponenteConexo(grafo, componente, vertice, idComponente);
     }
   }
+  imprimeComponenteConexa(grafo, componente, idComponente);
   fprintf(stdout, "\n");
 }
 
-void verificaVerticeComponenteConexo(Grafo * grafo, int vertice, int componente[], int idComponente) {
+void verificaVerticeComponenteConexo(Grafo * grafo, int componenteConexo[], int vertice, int idComponente) {
+  componenteConexo[vertice] = idComponente;
   Apontador atual = grafo->listaAdj[vertice];
-  componente[vertice] = idComponente;
-
-  fprintf(stdout, "%d ", vertice);
-
+  
   while (atual != NULL) {
-    if(componente[atual->vdest] == ANT_INICIO) {
-      verificaVerticeComponenteConexo(grafo, componente, atual->vdest, idComponente);
+    if(componenteConexo[atual->vdest] == -1) {
+      verificaVerticeComponenteConexo(grafo, componenteConexo, atual->vdest, idComponente);
     }
     atual = atual->prox;
+  }
+}
+
+void imprimeComponenteConexa(Grafo * grafo, int componente[], int idComponente) {
+  for (int id = 1; id <= idComponente; id++) {
+    fprintf(stdout, "\nC%d: ", id);
+    for (int vertice = 0; vertice < grafo->numVertices; ++vertice) {
+      if (componente[vertice] == id) fprintf(stdout, "%d ", vertice);
+    }
   }
 }

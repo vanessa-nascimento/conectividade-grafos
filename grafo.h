@@ -76,3 +76,7 @@ void verticeArticulacao(Grafo* grafo);
 void percorreBP(Grafo* grafo, int vertice, int cor[], int antecessor[], int* tempo, int tDescoberta[], int tTermino[], int tmenorRetorno[], int vArticulacao[]);
 
 void imprimeVerticeArticulacao(Grafo* grafo, int vArticulacao[]);
+
+void inicializaComponenteConexa(Grafo * grafo, int componente[]);
+
+void imprimeComponenteConexa(Grafo * grafo, int componente[], int idComponente);

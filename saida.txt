@@ -38,10 +38,10 @@ Caminhos BL:
 10 11 12 
 10 11 13 
 
-BP: 
+BP:
 0 1 3 2 4 5 6 7 8 9 10 11 12 13 
 
-Caminhos BP: 
+Caminhos BP:
 0
 0 1
 0 1 3 2
@@ -57,8 +57,8 @@ Caminhos BP:
 10 11 12
 10 11 12 13
 
-Componentes Conexos:
-C1: 0 1 3 2 4 5 6 7 8 9 
+Componentes Conectados:
+C1: 0 1 2 3 4 5 6 7 8 9 
 C2: 10 11 12 13 
 
 Vertices de articulacao:
