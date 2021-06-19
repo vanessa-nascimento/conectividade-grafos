@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include "grafo.h"
 
+// inicializaGrafo: verifica se numVertices é inválido e inicializa o grafo com zero arestas e lista de adjacentes para NULL
 bool inicializaGrafo(Grafo * grafo, int numVertices){
   if (numVertices <= 0) {
       fprintf(stderr, "\nERRO em inicializaGrafo: Numero de vertices deve ser maior que zero.");
       return false;
+  }
+  if (numVertices > 100) {
+    fprintf(stderr, "ERRO em inicializaGrafo: Numero de vertices deve ser menor que 100.\n");
+    return false;
   }
 
   grafo->numVertices = numVertices;
@@ -21,6 +26,7 @@ bool inicializaGrafo(Grafo * grafo, int numVertices){
   return true;
 };
 
+// verificaValidadeVertice: verifica o vertice é maior do que numVertices e se é negativo
 bool verificaValidadeVertice(Grafo * grafo, int v) {
   if (v > grafo->numVertices) {
       fprintf(stderr, "ERRO em verificaValidadeVertice: O vertice (%d) maior que o numero de vertices indicados no grafo (%d)", v, grafo->numVertices);
@@ -34,6 +40,7 @@ bool verificaValidadeVertice(Grafo * grafo, int v) {
   return true;
 }
 
+// existeAresta: retorna true se já possui aresta entre dois vertice no grafo e false caso contrário
 bool existeAresta(Grafo * grafo, int v1, int v2) {
   Apontador aresta = grafo->listaAdj[v1];
 
@@ -43,6 +50,7 @@ bool existeAresta(Grafo * grafo, int v1, int v2) {
   return false;
 }
 
+//insereAresta: insere uma aresta entre dois vértices com seu peso, inserindo a aresta no caminho inverso e indicando qual aresta considerar para utilizar em outras funções
 void insereAresta(Grafo * grafo, int v1, int v2, Peso peso) {
   Apontador novaAresta;
 
@@ -72,6 +80,7 @@ void insereAresta(Grafo * grafo, int v1, int v2, Peso peso) {
   if (!existeAresta(grafo, v2, v1)) grafo->numArestas++;
 }
 
+//removeAresta: remove uma aresta entre dois vértices, subtraindo de numArestas e atualizando o adjacente para NULL
 bool removeAresta(Grafo * grafo, int v1, int v2, Peso * peso) {
   Apontador atual, anterior;
   atual = grafo->listaAdj[v1];
@@ -100,6 +109,7 @@ bool removeAresta(Grafo * grafo, int v1, int v2, Peso * peso) {
   return false;
 }
 
+//leGrafo: le um arquivo de entrada, inicializa o grafo e insere as arestas de acordo
 void leGrafo(FILE * arquivoEntrada, Grafo* grafo) {
   int nVertices, nArestas;
   int v1, v2;
@@ -126,6 +136,7 @@ void leGrafo(FILE * arquivoEntrada, Grafo* grafo) {
   return;
 }
 
+//liberaGrafo: apaga o grafo liberando em memória
 void liberaGrafo(Grafo * grafo) {
   int v;
   Apontador aresta;
@@ -143,6 +154,7 @@ void liberaGrafo(Grafo * grafo) {
 
 }
 
+//listaAdjVazia: verifica se a lista de adjacencia de um vértice é vazia
 bool listaAdjVazia(Grafo * grafo, int v) {
   if (!verificaValidadeVertice(grafo, v)) return false;
   if(grafo->listaAdj[v] == NULL) return true;
@@ -150,10 +162,12 @@ bool listaAdjVazia(Grafo * grafo, int v) {
   return false;
 }
 
+//primeiroListaAdj: verifica o primeiro da lista de adjacencia de um vértice
 Apontador primeiroListaAdj(Grafo * grafo, int v) {
   return (grafo->listaAdj[v]);
 }
 
+//proxListaAdj: verifica o proximo da lista de adjacencia de um vértice
 Apontador proxListaAdj(Grafo * grafo, int v, Apontador atual) {
   if (atual == NULL) {
     fprintf(stderr, "ERRO em proxListaAdj: Aresta atual e igual a NULL");
@@ -163,6 +177,7 @@ Apontador proxListaAdj(Grafo * grafo, int v, Apontador atual) {
   return (atual -> prox);
 }
 
+//imprimeGrafo: imprime o grafo atual com numVertices, numArestas os vertices, o vertice destino e o peso da aresta
 void imprimeGrafo(Grafo* grafo) {
   Apontador atual;
   fprintf(stdout, "%d %d", grafo->numVertices, grafo->numArestas);
@@ -174,7 +189,7 @@ void imprimeGrafo(Grafo* grafo) {
       while(atual != NULL) {
         if (atual->aresta) 
           fprintf (stdout, "\n%d %d %d", i, atual->vdest, atual->peso);
-        atual = atual -> prox;
+        atual = atual->prox;
       }
     }
     

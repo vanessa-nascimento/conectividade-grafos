@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "grafo.h"
 
+//verticeArticulacao: Setar todos os vertices como brancos, sem antecessor e tempo de de descoberta, término e de retorno igual a zero, vArticulacao como um boolean false
 void verticeArticulacao(Grafo* grafo) {
     int inicioComponente, tempo, cor[grafo->numVertices], tDescoberta[grafo->numVertices], tTermino[grafo->numVertices], antecessor[grafo->numVertices], vArticulacao[grafo->numVertices], tmenorRetorno[grafo->numVertices];
-
     tempo = 0;
     
     for (int vertice = 0; vertice < grafo->numVertices; vertice++) {
@@ -22,7 +22,7 @@ void verticeArticulacao(Grafo* grafo) {
     imprimeVerticeArticulacao(grafo, vArticulacao);
 }
 
-
+//percorreBP: Com o mesmo processo que o visitaBP, ele faz a verificação para vertice de articulacao
 void percorreBP(Grafo* grafo, int vertice, int cor[], int antecessor[], int* tempo, int tDescoberta[], int tTermino[], int tmenorRetorno[], int vArticulacao[]) {
   cor[vertice] = CINZA; 
   tDescoberta[vertice] = tmenorRetorno[vertice] = ++(*tempo);
@@ -51,6 +51,7 @@ void percorreBP(Grafo* grafo, int vertice, int cor[], int antecessor[], int* tem
   cor[vertice] = PRETO;
 }
 
+//imprimeVerticeArticulacao: imprime os vertices de articulacao daquele grafo
 void imprimeVerticeArticulacao(Grafo* grafo, int vArticulacao[]) {
     fprintf(stdout, "\nVertices de articulacao:\n");
     for (int vertice = 0; vertice < grafo->numVertices; vertice++) {

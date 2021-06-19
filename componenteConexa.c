@@ -2,12 +2,14 @@
 #include <stdlib.h> 
 #include "grafo.h"
 
+//inicializaComponenteConexa: inicializa o componente com -1
 void inicializaComponenteConexa(Grafo * grafo, int componente[]) {
   for(int vertice = 0; vertice < grafo->numVertices; ++vertice) {
-    componente[vertice] = -1;
+    componente[vertice] = ANT_INICIO;
    }
 }
 
+//componenteConexa: cria variaveis necessarias, chama o inicializaComponenteConexa, cria componentes novas e insere vertices pertinentes com o verificaVerticeComponenteConexa
 void componenteConexa(Grafo * grafo) {
   int idComponente = 0;
   int componente[grafo->numVertices];
@@ -25,6 +27,7 @@ void componenteConexa(Grafo * grafo) {
   fprintf(stdout, "\n");
 }
 
+//verificaVerticeComponenteConexa: percorre os vertices, verificando se faz parte daquele componente
 void verificaVerticeComponenteConexa(Grafo * grafo, int vertice, int idComponente, int componente[]) {
   Apontador atual = grafo->listaAdj[vertice];
   componente[vertice] = idComponente;
@@ -36,6 +39,7 @@ void verificaVerticeComponenteConexa(Grafo * grafo, int vertice, int idComponent
   }
 }
 
+//imprimeComponenteConexa: faz a impressão dos componentes em ordem crescente
 void imprimeComponenteConexa(Grafo * grafo, int idComponente, int componente[]) {
   fprintf(stdout, "\nComponentes Conectados:");
   

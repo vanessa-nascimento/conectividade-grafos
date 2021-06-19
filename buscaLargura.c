@@ -24,13 +24,7 @@ void buscaLargura(Grafo *grafo) {
     if (cor[vertice] == BRANCO) visitaLargura(vertice, grafo, cor, antecessor, distancia);
   }
 
-  fprintf(stdout, "\n\nCaminhos BL: \n");
-  for (int vertice = 0; vertice < grafo->numVertices; vertice++) {
-    if(distancia[vertice] == DIST_INICIO) inicioComponente = vertice;
-    
-    caminhoLargura(inicioComponente, vertice, antecessor, distancia);
-    fprintf(stdout, "\n");
-  }
+  imprimeCaminhoLargura(grafo, distancia, antecessor, inicioComponente);
 }
 
 // visitaLargura: Aqui visitamos os vertices de um componente inseridos em uma fila, e mudando cor para cinza quem for branco e preto para quem ja for cinza, atualizando sua distancia e antecessor
@@ -42,7 +36,7 @@ void visitaLargura(int inicioComponente, Grafo *grafo, int cor[], int antecessor
   PFILA Fila = inicializarFila();
   PITEM retiraPrimeiraFila;
   Apontador vAtual;
-  inserirElemento(Fila, inicioComponente);
+  inserirItem(Fila, inicioComponente);
 
   while(Fila->qtdElementos != 0) {
     retiraPrimeiraFila = atendePrimeiro(Fila);
@@ -57,7 +51,7 @@ void visitaLargura(int inicioComponente, Grafo *grafo, int cor[], int antecessor
           cor[vAtual->vdest] = CINZA;
           antecessor[vAtual->vdest] = retiraPrimeiraFila->idItem;
           distancia[vAtual->vdest] = distancia[retiraPrimeiraFila->idItem] + 1;
-          inserirElemento(Fila, vAtual->vdest);
+          inserirItem(Fila, vAtual->vdest);
         }
         vAtual = vAtual->prox;
       }
@@ -76,4 +70,15 @@ void caminhoLargura(int inicioComponente, int vertice, int antecessor[], int dis
   
   caminhoLargura(inicioComponente, antecessor[vertice], antecessor, distancia);
   fprintf(stdout, "%d ", vertice);
+}
+
+//imprimeCaminhoLargura: imprime o caminho feito pela busca em largura
+void imprimeCaminhoLargura(Grafo *grafo, int distancia[], int antecessor[], int inicioComponente) {
+  fprintf(stdout, "\n\nCaminhos BL: \n");
+  for (int vertice = 0; vertice < grafo->numVertices; vertice++) {
+    if(distancia[vertice] == DIST_INICIO) inicioComponente = vertice;
+    
+    caminhoLargura(inicioComponente, vertice, antecessor, distancia);
+    fprintf(stdout, "\n");
+  }
 }
